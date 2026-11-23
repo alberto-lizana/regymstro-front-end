@@ -1,39 +1,72 @@
-<nav class="navbar bg-body-tertiary border-bottom">
+
+<nav class="navbar navbar-expand-lg bg-body-tertiary border-bottom">
     <div class="container-fluid px-4">
 
+        <!-- Marca -->
         <a class="navbar-brand fw-bold" routerLink="/inicio">
-            <i class="bi bi-activity me-2"></i>Registro de entrenamientos
+            <i class="bi bi-activity me-2"></i>
+            ReGYMstro
         </a>
 
-        <ul class="navbar-nav flex-row gap-3 me-auto ms-4">
-            <li class="nav-item">
-                <a class="nav-link" routerLink="/inicio" routerLinkActive="active fw-semibold">
-                    <i class="bi bi-house me-1"></i>Inicio
-                </a>
-            </li>
+        <!-- Botón hamburguesa -->
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarPrincipal"
+            aria-controls="navbarPrincipal"
+            aria-expanded="false"
+            aria-label="Abrir navegación">
 
-            <li class="nav-item">
-                <a class="nav-link" routerLink="/perfil" routerLinkActive="active fw-semibold">
-                    <i class="bi bi-person me-1"></i>Mi perfil
-                </a>
-            </li>
-
-            @if (authService.esAdmin()) {
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="/usuarios" routerLinkActive="active fw-semibold">
-                        <i class="bi bi-people me-1"></i>Gestión de usuarios
-                    </a>
-                </li>
-            }
-        </ul>
-
-
-        
-
-        <button class="btn btn-outline-danger btn-sm" type="button" (click)="authService.logout()">
-            <i class="bi bi-box-arrow-right me-1"></i>Cerrar sesión
+            <span class="navbar-toggler-icon"></span>
         </button>
 
+        <!-- Contenido responsive -->
+        <div class="collapse navbar-collapse" id="navbarPrincipal">
+
+            <ul class="navbar-nav me-auto ms-lg-4">
+
+                <li class="nav-item">
+                    <a class="nav-link"
+                       routerLink="/inicio"
+                       routerLinkActive="active fw-semibold">
+                        <i class="bi bi-house me-1"></i>
+                        Inicio
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link"
+                       routerLink="/perfil"
+                       routerLinkActive="active fw-semibold">
+                        <i class="bi bi-person me-1"></i>
+                        Mi perfil
+                    </a>
+                </li>
+
+                @if (authService.esAdmin()) {
+                    <li class="nav-item">
+                        <a class="nav-link"
+                           routerLink="/usuarios"
+                           routerLinkActive="active fw-semibold">
+                            <i class="bi bi-people me-1"></i>
+                            Gestión de usuarios
+                        </a>
+                    </li>
+                }
+
+            </ul>
+
+            <button
+                class="btn btn-outline-danger btn-sm mt-3 mt-lg-0"
+                type="button"
+                (click)="authService.logout()">
+
+                <i class="bi bi-box-arrow-right me-1"></i>
+                Cerrar sesión
+            </button>
+
+        </div>
     </div>
 </nav>
 
