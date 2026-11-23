@@ -1,0 +1,95 @@
+<div class="container-fluid min-vh-100 d-flex justify-content-center align-items-center bg-body-tertiary py-4">
+    <div class="card shadow border-0 rounded-4 w-100" style="max-width: 520px;">
+        <div class="card-body p-4 p-md-5">
+
+            <div class="text-center mb-4">
+                <h2 class="fw-bold">Crear cuenta</h2>
+                <p class="text-secondary">Completa tus datos para registrarte</p>
+            </div>
+
+            <form [formGroup]="registroForm" (ngSubmit)="registrar()">
+
+                <div class="mb-3">
+                    <label class="form-label">Nombre</label>
+                    <input type="text" class="form-control" formControlName="nombre"
+                        [class.is-invalid]="registroForm.controls.nombre.touched && registroForm.controls.nombre.invalid">
+                    <div class="invalid-feedback">El nombre es obligatorio.</div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12 col-md-6 mb-3">
+                        <label class="form-label">Apellido paterno</label>
+                        <input type="text" class="form-control" formControlName="appat"
+                            [class.is-invalid]="registroForm.controls.appat.touched && registroForm.controls.appat.invalid">
+                        <div class="invalid-feedback">Obligatorio.</div>
+                    </div>
+                    <div class="col-12 col-md-6 mb-3">
+                        <label class="form-label">Apellido materno</label>
+                        <input type="text" class="form-control" formControlName="apmat"
+                            [class.is-invalid]="registroForm.controls.apmat.touched && registroForm.controls.apmat.invalid">
+                        <div class="invalid-feedback">Obligatorio.</div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12 col-md-6 mb-3">
+                        <label class="form-label">Fecha de nacimiento</label>
+                        <input type="date" class="form-control" formControlName="fechaNacimiento"
+                            [class.is-invalid]="registroForm.controls.fechaNacimiento.touched && registroForm.controls.fechaNacimiento.invalid">
+                        <div class="invalid-feedback">Obligatoria.</div>
+                    </div>
+                    <div class="col-12 col-md-6 mb-3">
+                        <label class="form-label">Sexo</label>
+                            <select class="form-select" formControlName="sexo"
+                                [class.is-invalid]="registroForm.controls.sexo.touched && registroForm.controls.sexo.invalid">
+                                <option value="">Selecciona...</option>
+                                <option value="MASCULINO">Masculino</option>
+                                <option value="FEMENINO">Femenino</option>
+                            </select>
+                        <div class="invalid-feedback">Selecciona una opción.</div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Correo electrónico</label>
+                    <input type="email" class="form-control" formControlName="email"
+                        placeholder="usuario@correo.com"
+                        [class.is-invalid]="registroForm.controls.email.touched && registroForm.controls.email.invalid">
+                    <div class="invalid-feedback">Introduce un correo electrónico válido.</div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Contraseña</label>
+                    <input type="password" class="form-control" formControlName="password"
+                        [class.is-invalid]="registroForm.controls.password.touched && registroForm.controls.password.invalid">
+                    <div class="invalid-feedback">La contraseña es obligatoria.</div>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label">Repetir contraseña</label>
+                    <input type="password" class="form-control" formControlName="rPassword"
+                        [class.is-invalid]="registroForm.controls.rPassword.touched && registroForm.hasError('noCoinciden')">
+                    <div class="invalid-feedback">Las contraseñas no coinciden.</div>
+                </div>
+
+                @if (mensajeError()) {
+                    <div class="alert alert-danger" role="alert">{{ mensajeError() }}</div>
+                }
+
+                <button type="submit" class="btn btn-primary w-100"
+                    [disabled]="registroForm.invalid || cargando()">
+                    @if (cargando()) {
+                        <span class="spinner-border spinner-border-sm me-2"></span>
+                        Creando cuenta...
+                    } @else {
+                        Crear cuenta
+                    }
+                </button>
+            </form>
+
+            <div class="text-center mt-3 small">
+                <a routerLink="/login">¿Ya tienes cuenta? Inicia sesión</a>
+            </div>
+        </div>
+    </div>
+</div>

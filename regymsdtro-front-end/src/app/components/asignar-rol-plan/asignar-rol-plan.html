@@ -1,0 +1,56 @@
+<div class="modal fade show d-block" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 rounded-4 shadow">
+
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold">Asignar rol y plan</h5>
+                <button type="button" class="btn-close" (click)="cancelado.emit()"></button>
+            </div>
+
+            <form [formGroup]="form" (ngSubmit)="guardar()">
+                <div class="modal-body">
+
+                    <div class="mb-3">
+                        <div class="fw-semibold">{{ usuario().nombreCompleto }}</div>
+                        <div class="text-secondary small">{{ usuario().email }}</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Rol</label>
+                        <select class="form-select" formControlName="rol">
+                            @for (r of roles; track r) {
+                                <option [value]="r">{{ r }}</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Plan</label>
+                        <select class="form-select" formControlName="plan">
+                            @for (p of planes; track p) {
+                                <option [value]="p">{{ p }}</option>
+                            }
+                        </select>
+                    </div>
+
+                    @if (error()) {
+                        <div class="alert alert-danger mb-0" role="alert">{{ error() }}</div>
+                    }
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" (click)="cancelado.emit()">Cancelar</button>
+                    <button type="submit" class="btn btn-primary" [disabled]="guardando()">
+                        @if (guardando()) {
+                            <span class="spinner-border spinner-border-sm me-2"></span>
+                        }
+                        Guardar
+                    </button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+<div class="modal-backdrop fade show"></div>

@@ -1,0 +1,110 @@
+<div class="listado-container">
+
+    @if (cargando) {
+        <div class="estado-carga">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Cargando...</span>
+            </div>
+            <p>Cargando información...</p>
+        </div>
+    }
+
+    @else if (datos.length === 0) {
+        <div class="estado-vacio">
+            <i class="bi bi-inbox"></i>
+            <p>No hay registros para mostrar.</p>
+        </div>
+    }
+
+    @else {
+
+        <div class="table-responsive">
+
+            <table class="table table-hover align-middle">
+
+                <thead>
+                    <tr>
+                        @for (columna of columnas; track columna.campo) {
+                            <th>{{ columna.titulo }}</th>
+                        }
+
+                        @if (acciones.length > 0) {
+                            <th class="text-center">Acciones</th>
+                        }
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @for (fila of datos; track fila['idUsuario'] ?? $index) {
+                        <tr>
+
+                            @for (columna of columnas; track columna.campo) {
+                                <td>
+                                    {{ fila[columna.campo] ?? '-' }}
+                                </td>
+                            }
+
+                            @if (acciones.length > 0) {
+                                <td class="acciones text-center">
+
+                                    @for (accion of acciones; track accion.id) {
+                                        <button
+                                            type="button"
+                                            class="btn btn-sm me-1"
+                                            [class]="accion.clase"
+                                            [title]="accion.titulo"
+                                            (click)="ejecutar(accion.id, fila)">
+
+                                            <i [class]="accion.icono"></i>
+
+                                        </button>
+                                    }
+
+                                </td>
+                            }
+
+                        </tr>
+                    }
+                </tbody>
+
+            </table>
+
+        </div>
+
+        <div class="paginacion">
+
+            <span class="informacion-paginacion">
+                Total registros: {{ totalElementos }}
+            </span>
+
+            <div class="controles-paginacion">
+
+                <button
+                    type="button"
+                    class="btn btn-outline-primary btn-sm"
+                    [disabled]="paginaActual === 0"
+                    (click)="paginaAnterior()">
+
+                    Anterior
+                </button>
+
+                <span>
+                    Página {{ paginaActual + 1 }} de {{ totalPaginas }}
+                </span>
+
+                <button
+                    type="button"
+                    class="btn btn-outline-primary btn-sm"
+                    [disabled]="paginaActual >= totalPaginas - 1"
+                    (click)="paginaSiguiente()">
+
+                    Siguiente
+                </button>
+
+            </div>
+
+        </div>
+
+    }
+
+</div>

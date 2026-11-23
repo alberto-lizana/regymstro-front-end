@@ -1,0 +1,99 @@
+<div class="bg-body-tertiary min-vh-100 py-5">
+    <div class="container">
+
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-8 col-xl-6">
+                <div class="card shadow border-0 rounded-4">
+                    <div class="card-body p-4">
+
+                        <h4 class="fw-bold text-center mb-4">
+                            <i class="bi bi-sliders me-2"></i>Panel de control
+                        </h4>
+
+                        <label class="form-label fw-semibold">Buscar por correo electrónico</label>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                            <input type="email" class="form-control" placeholder="usuario@correo.com"
+                                [ngModel]="email()" (ngModelChange)="email.set($event)"
+                                (keyup.enter)="buscarPorEmail()">
+                            <button class="btn btn-primary" type="button" (click)="buscarPorEmail()">Buscar</button>
+                        </div>
+
+                        <label class="form-label fw-semibold">Buscar por ID</label>
+                        <div class="input-group mb-4">
+                            <span class="input-group-text"><i class="bi bi-hash"></i></span>
+                            <input type="number" class="form-control" placeholder="Ej: 1"
+                                [ngModel]="idBuscar()" (ngModelChange)="idBuscar.set($event)"
+                                (keyup.enter)="buscarPorId()">
+                            <button class="btn btn-primary" type="button" (click)="buscarPorId()">Buscar</button>
+                        </div>
+
+                        <div class="row g-2">
+                            <div class="col-12 col-sm-6">
+                                <button class="btn btn-outline-primary w-100 py-3" type="button"
+                                    (click)="obtenerTodos(0)">
+                                    <i class="bi bi-people d-block fs-4"></i>Listar todos
+                                </button>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <button class="btn btn-outline-secondary w-100 py-3" type="button"
+                                    (click)="miPerfil()">
+                                    <i class="bi bi-person-circle d-block fs-4"></i>Mi perfil
+                                </button>
+                            </div>
+                        </div>
+
+                        @if (mensajeError()) {
+                            <div class="alert alert-danger mt-4 mb-0" role="alert">{{ mensajeError() }}</div>
+                        }
+                        @if (mensajeExito()) {
+                            <div class="alert alert-success mt-4 mb-0" role="alert">{{ mensajeExito() }}</div>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @if (mostrarResultados()) {
+            <div class="row justify-content-center mt-4">
+                <div class="col-12 col-xl-10">
+                    <div class="card shadow-sm border-0 rounded-4">
+                        <div class="card-body">
+
+                            <h5 class="fw-bold mb-3">
+                                @switch (modo()) {
+                                    @case ('todos') { <i class="bi bi-people me-2"></i>Todos los usuarios }
+                                    @case ('perfil') { <i class="bi bi-person-circle me-2"></i>Mi perfil }
+                                    @default { <i class="bi bi-search me-2"></i>Resultado de la búsqueda }
+                                }
+                            </h5>
+
+                            <app-listado
+                                [columnas]="columnasUsuarios"
+                                [datos]="usuarios()"
+                                [acciones]="accionesUsuarios"
+                                [cargando]="cargando()"
+                                [paginaActual]="paginaActual()"
+                                [totalPaginas]="totalPaginas()"
+                                [totalElementos]="totalElementos()"
+                                [tamanioPagina]="tamanioPagina"
+                                (cambiarPagina)="obtenerTodos($event)"
+                                (ejecutarAccion)="ejecutarAccion($event)">
+                            </app-listado>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+</div>
+
+@if (editandoAdmin(); as u) {
+    <app-asignar-rol-plan
+        [usuario]="u"
+        (guardado)="alGuardar()"
+        (cancelado)="cerrarAdmin()" />
+}
