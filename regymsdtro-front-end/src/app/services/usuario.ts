@@ -15,7 +15,7 @@ import {
 export class UsuarioService {
 
     private readonly http = inject(HttpClient);
-    private readonly base: string = `${API_URL}/usuarios`;
+    private readonly base: string = `${API_URL}/usuario`;
 
 
 
@@ -25,7 +25,7 @@ export class UsuarioService {
             .set('size', size);
 
         return this.http.get<PageResponse<UsuarioResponseDto>>(
-            `${this.base} + /obtener-todos`,
+            `${this.base}/obtener-todos`,
             { params }
         );
     }
