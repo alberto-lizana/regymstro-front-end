@@ -15,6 +15,7 @@ import {
 export class UsuarioService {
 
     private readonly http = inject(HttpClient);
+    private readonly base: string = `${API_URL}/usuarios`;
 
 
 
@@ -24,7 +25,7 @@ export class UsuarioService {
             .set('size', size);
 
         return this.http.get<PageResponse<UsuarioResponseDto>>(
-            `${API_URL}/obtener-todos`,
+            `${this.base} + /obtener-todos`,
             { params }
         );
     }
@@ -33,57 +34,57 @@ export class UsuarioService {
         const params = new HttpParams().set('email', email);
 
         return this.http.get<UsuarioResponseDto>(
-            `${API_URL}/obtener-por-email`,
+            `${this.base}/obtener-por-email`,
             { params }
         );
     }
 
     obtenerPorId(id: number): Observable<UsuarioResponseDto> {
-        return this.http.get<UsuarioResponseDto>(`${API_URL}/obtener-${id}`);
+        return this.http.get<UsuarioResponseDto>(`${this.base}/obtener-${id}`);
     }
 
     obtenerMiPerfil(): Observable<UsuarioResponseDto> {
-        return this.http.get<UsuarioResponseDto>(`${API_URL}/obtener`);
+        return this.http.get<UsuarioResponseDto>(`${this.base}/obtener`);
     }
 
     registrarUsuario(request: RegistrarRequest): Observable<UsuarioResponseDto> {
-        return this.http.post<UsuarioResponseDto>(`${API_URL}/registrar`, request);
+        return this.http.post<UsuarioResponseDto>(`${this.base}/registrar`, request);
     }
 
     borradoLogico(id: number): Observable<void> {
-        return this.http.delete<void>(`${API_URL}/borrado-logico/${id}`);
+        return this.http.delete<void>(`${this.base}/borrado-logico/${id}`);
     }
 
     borradoFisico(id: number): Observable<void> {
-        return this.http.delete<void>(`${API_URL}/borrado-fisico/${id}`);
+        return this.http.delete<void>(`${this.base}/borrado-fisico/${id}`);
     }
 
     modificarNombre(nombre: string): Observable<UsuarioResponseDto> {
-        return this.http.patch<UsuarioResponseDto>(`${API_URL}/modificar-nombre`, { nombre });
+        return this.http.patch<UsuarioResponseDto>(`${this.base}/modificar-nombre`, { nombre });
     }
 
     modificarAppat(appat: string): Observable<UsuarioResponseDto> {
-        return this.http.patch<UsuarioResponseDto>(`${API_URL}/modificar-appat`, { appat });
+        return this.http.patch<UsuarioResponseDto>(`${this.base}/modificar-appat`, { appat });
     }
 
     modificarApmat(apmat: string): Observable<UsuarioResponseDto> {
-        return this.http.patch<UsuarioResponseDto>(`${API_URL}/modificar-apmat`, { apmat });
+        return this.http.patch<UsuarioResponseDto>(`${this.base}/modificar-apmat`, { apmat });
     }
 
     modificarFechaNacimiento(fechaNacimiento: string): Observable<UsuarioResponseDto> {
-        return this.http.patch<UsuarioResponseDto>(`${API_URL}/modificar-fechaNacimiento`, { fechaNacimiento });
+        return this.http.patch<UsuarioResponseDto>(`${this.base}/modificar-fechaNacimiento`, { fechaNacimiento });
     }
 
     modificarSexo(sexo: string): Observable<UsuarioResponseDto> {
-        return this.http.patch<UsuarioResponseDto>(`${API_URL}/modificar-sexo`, { sexo });
+        return this.http.patch<UsuarioResponseDto>(`${this.base}/modificar-sexo`, { sexo });
     }
 
 
     modificarRolPorId(idUsuario: number, rol: string): Observable<UsuarioResponseDto> {
-        return this.http.patch<UsuarioResponseDto>(`${API_URL}/admin/modificar-rol`, { idUsuario, rol });
+        return this.http.patch<UsuarioResponseDto>(`${this.base}/admin/modificar-rol`, { idUsuario, rol });
     }
 
     modificarPlanPorId(idUsuario: number, plan: string): Observable<UsuarioResponseDto> {
-        return this.http.patch<UsuarioResponseDto>(`${API_URL}/admin/modificar-plan`, { idUsuario, plan });
+        return this.http.patch<UsuarioResponseDto>(`${this.base}/admin/modificar-plan`, { idUsuario, plan });
     }
 }
